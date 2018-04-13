@@ -1,13 +1,18 @@
 const mongoose = require('mongoose');
 const houseSchema = new mongoose.Schema({
-    type: {
+    houseType: {
         type: String,
-        required: [true, 'The house type is required']
+        required: [true, 'The type is required']
     },
     price: {
         type: String,
-        required: [true, 'The house price is required']
+        required: [true, 'The price is required']
+    },
+    image: {
+        type: String,
+        default: ''
     }
+
 }, {
     timestamps: true,
     toJSON: {
@@ -19,6 +24,7 @@ const houseSchema = new mongoose.Schema({
         }
     }
  });
+
 
  const House = mongoose.model('House', houseSchema);
  module.exports = House;
