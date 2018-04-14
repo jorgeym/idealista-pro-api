@@ -20,6 +20,27 @@ module.exports.get = (req, res, next) => {
     }).catch(error => next(error));
 }
 
+module.exports.search = (req, res, next) => {
+  const {
+    houseType,
+    priceMin,
+    priceMax,
+  } = req.body;
+  console.log(req.body)
+  House.find({"houseType": houseType, "price": { $gte: priceMin, $lte: priceMax } })
+    .then((houseSearchResults) => {
+      console.log(houseSearchResults)
+      res.json(houseSearchResults);
+    })
+    .catch(error => {
+      if (error instanceof mongoose.Error.ValidationError) {
+        next(new ApiError(error.errors));
+      } else {
+        next(new ApiError(error.message, 500));
+      }
+    })
+}
+
 module.exports.create = (req, res, next) => {
   const house = new House(req.body);
   if (req.file) {
