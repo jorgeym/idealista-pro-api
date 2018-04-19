@@ -72,9 +72,10 @@ module.exports.delete = (req, res, next) => {
 }
 
 module.exports.edit = (req, res, next) => {
+  console.log(req.body, 'asdasdasda', req.file, 'asdasdasdasd', req.params.id)
   const id = req.params.id;
   if (req.file) {
-    body.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    req.body.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
   }
 
   House.findByIdAndUpdate(id, { $set: req.body }, { new: true })
